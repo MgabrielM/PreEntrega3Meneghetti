@@ -1,0 +1,268 @@
+body{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Generales */
+a{
+    color: black;
+    text-decoration: none;
+}
+
+
+/* Pagina INDEX */
+.index-body{
+    width: 100vw;
+    height: 100vh;
+    min-width: 350px;
+    min-height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #08415C;
+}
+
+.index-contenedor{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    border-radius: 15px;
+    gap: 20px;
+    background-color: #CC2936;
+}
+
+.index-boton{
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.index-contenedor-administrador{
+    background-color: #EBBAB9;
+}
+
+.index-contenedor-usuario{
+    background-color: #EBBAB9;
+}
+
+
+/* Pagina Admin */
+.admin-body{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #EBBAB9;
+    gap: 30px 0;
+}
+
+.admin-header{
+    width: 100%;
+    height: 70px;
+    background-color: #DC7278;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.admin-contenedor{
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.admin-contenedor-registro{
+    width: 100%;
+    height: auto;
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border: 0.5px solid black;
+    padding: 10px;
+}
+
+.campos-registro{
+    width: 130px;
+}
+
+.campos-registro-numero{
+    width: 50px;
+}
+
+.admin-contenedor-listado{
+    width: 100%;
+    height: auto;
+    background-color: #CC2936;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+#listado-productos{
+    display: flex;    
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    gap: 20px 50px;
+}
+
+.listado-productos-item{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    border: 0.5px solid gray;
+    padding: 20px;    
+}
+
+.productos-item{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 30px;
+}
+
+/* Pagina Compra */
+.compra-body{
+    width: 100%;
+    height: auto;
+    background-color: rgba(255, 216, 216, 0.886);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.compra-header{
+    width: 100%;
+    height: 80px;
+    background-color: rgb(255, 102, 2);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+.compra-header>a{
+    color: white;
+}
+
+.logo{
+    width: 130px;
+    height: auto;
+}
+
+.compra-encabezado{
+    width: 840px;
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.compra-contenedor-productos{
+    width: 840px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-radius: 15px;
+    background-color: rgb(238, 215, 191);
+}
+
+.card{
+    width: 150px;
+    height: 250px;
+    background-color: white;   
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-titulo{
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.card-precio{
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+
+.card-imagen{
+    width: 130px;
+    height: 150px;
+}
+
+.card-cantidad-seleccionada{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-cantidad-seleccionada-cantidad{
+    width: 30px;
+    height: 20px;    
+}
+
+.boton-modificacion{
+    background-color: rgb(255, 102, 2);
+    color: white;
+}
+
+.card-cantidad-seleccionada-menos{
+    width: 25px;
+    height: 25px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.card-cantidad-seleccionada-mas{
+    width: 25px;
+    height: 25px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.facturacion{
+    width: 840px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: rgb(238, 215, 191);
+    margin-top: 20px;
+}

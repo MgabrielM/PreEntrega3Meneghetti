@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Panel de administrador</title>
+</head>
+<body class="admin-body">
+    <header class="admin-header">
+        <h1>PANEL DE GESTIÓN</h1>
+        <a href="../index.html">Volver</a>
+    </header>
+    <section class="admin-contenedor">
+        <div class="admin-contenedor-registro">
+            <div>
+                <h4>Nombre</h4>
+                <input type="text" class="campos-registro" id="valorNombre" value="">
+            </div>
+            <div>
+                <h4>Descripcion</h4>
+                <input type="text" class="campos-registro" id="valorDescripcion" value="">            </div>
+            <div>
+                <h4>Sotck</h4>
+                <input type="number" class="campos-registro-numero" id="valorStock" value="0" min="0">            
+            </div>
+            <div>
+                <h4>Precio</h4>
+                <input type="number" class="campos-registro-numero" id="valorPrecio" value="0" min="0">
+            </div>
+            <div>
+                <button type="button" id="guardar-registro">Guardar</button>
+            </div>
+        </div>
+        <div id="registro-mensaje">
+
+        </div>
+        <div class="admin-contenedor-listado">
+            <div id="listado-productos">
+                
+            </div>
+        </div>
+    </section>
+    <script src="../js/script.js"></script>
+</body>
+</html>
