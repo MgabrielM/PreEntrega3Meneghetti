@@ -4,8 +4,14 @@ window.onload = function() {
         paginaAdministrador();
     } else if (tituloPagina === "Negocio") {
         paginaNegocio();
+    } else if (tituloPagina === "Inicio"){
+        paginaIndex();
     }
 };
+
+function paginaIndex(){
+    alert("Hola! \n 1- Se debe ingresar a Panel de adminstrador para cargar listado en el Panel de Usuario (Se puede crear un producto) \n 2- Ingresar al Panel de usuario y realizar la compra de los items.");
+}
 
 function paginaAdministrador(){
     let productos = {
@@ -41,6 +47,20 @@ function paginaAdministrador(){
             tododia: {
                 id: 4,
                 nombre: "Kit Tododía",
+                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                stock: 100,
+                precio: 4800,            
+            },
+            erio: {
+                id: 5,
+                nombre: "Perfume Erio",
+                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                stock: 100,
+                precio: 4800,            
+            },
+            arto: {
+                id: 6,
+                nombre: "Perfume Arto",
                 descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
                 stock: 100,
                 precio: 4800,            
@@ -105,19 +125,6 @@ function paginaAdministrador(){
     const guardarRegistro = document.querySelector("#guardar-registro");
     guardarRegistro.addEventListener('click', function(){crearRegistro();});
     
-    // const guardarProductos = document.querySelector("#guardar-productos");
-    // guardarProductos.addEventListener('click', function(){guardarLocal();});
-    
-    // function guardarLocal(){
-    //     // console.log("guardar local");
-    //     let productosJSON = JSON.stringify(productos);
-    //     localStorage.setItem("productos",productosJSON);
-    //     console.log(productosJSON);
-        
-    
-    // }
-    
-    
     function crearRegistro(){
     
         let valorNombre = document.getElementById("valorNombre");    
@@ -158,11 +165,6 @@ function paginaAdministrador(){
             productos.perfumes[vNombre] = nuevoPerfume;
     
             console.log(productos);
-    
-            // console.log(vNombre);
-            // console.log(vDescripcion);
-            // console.log(vStock);
-            // console.log(vPrecio);
             
             valorNombre.value = "";
             valorDescripcion.value = "";
@@ -228,13 +230,14 @@ function paginaNegocio(){
     botonMas.forEach(function(botonMas){
         botonMas.addEventListener("click", function(){
             let botonMasInfo = event.target.name.toString();
-            
+            let cantidadCarrito = []; 
             let campoCantidad = document.getElementById("cantidad-"+botonMasInfo);
             let valorCantidad = parseInt(campoCantidad.value);
-            valorCantidad++; 
+            valorCantidad++
 
             campoCantidad.value = valorCantidad;         
             sumatoria();
+
         })
     });
 
@@ -251,7 +254,7 @@ function paginaNegocio(){
             }else{
                 valorCantidad--;
                 campoCantidad.value = valorCantidad;
-                sumatoria();
+                sumatoria();                
             }             
         })
     });
@@ -261,32 +264,69 @@ function paginaNegocio(){
         let identificador, valorCantidad,sumaVariable;
         let unidades = 0;
         let total = 0;
+        let mostrarCarritoInfo = document.querySelector("#carrito-mostrar");
+        mostrarCarritoInfo.innerHTML = '';
+
         idSumatoria.forEach(function(cantidad){           
             identificador = cantidad.getAttribute("id");
             let cortarCadena = identificador.split("-");
             identificador = parseInt(cortarCadena[1]);
-            valorCantidad = parseInt(cantidad.value);
-            
-            
+            valorCantidad = parseInt(cantidad.value);           
 
             for(let perfum in productos.perfumes){
                 if (productos.perfumes[perfum].id == identificador){
-                    sumaVariable =(valorCantidad * productos.perfumes[perfum].precio);                   
+                    sumaVariable =(valorCantidad * productos.perfumes[perfum].precio);
+                    
+                    carrito(identificador,productos.perfumes[perfum].nombre,productos.perfumes[perfum].precio, parseInt(valorCantidad));               
                 }
             }
             unidades = parseInt(unidades + valorCantidad);
             total = parseInt(total + sumaVariable);
-
+            
         }
         )
-        // console.log("La card " + identificador + " tiene una cantidad de : "+valorCantidad+ " dando un total de: "+ total);
         let mostrarCantidad = document.getElementById("mostrarCantidad");
         mostrarCantidad.innerText = unidades;
         let mostrarTotal = document.getElementById("mostrarTotal");
-        mostrarTotal.innerText = total;
-
-        
+        mostrarTotal.innerText = total;    
+        let mostrarCarritoCantidad = document.querySelector("#carrito-mostrar-cantidad");
+        mostrarCarritoCantidad.innerHTML = mostrarCarritoCantidad.innerHTML = "Carrito ("+unidades+")";
+        let carritoModo = document.querySelector("#carrito");
+        if (unidades > 0){
+            carritoModo.classList.remove("carrito-sin-materiales");
+            carritoModo.classList.add("carrito-con-materiales");
+        } else {
+            carritoModo.classList.remove("carrito-con-materiales");
+            carritoModo.classList.add("carrito-sin-materiales");
+        }
     }
 }
 
+function carrito (id, nombre, precio, cantidad){
+        let idE = parseInt(id);
+        let nombreProducto = nombre.toString();
+        let precioProducto = parseInt(precio);
+        let cantidadProducto = parseInt(cantidad);
+        let mostrarCarritoInfo = document.querySelector("#carrito-mostrar");
+        
 
+        let matriz = [
+            [idE, nombreProducto, precioProducto, cantidadProducto]
+        ];
+
+        for (let i = 0; i < matriz.length; i++) {
+            if (matriz[i][3] > 0){   
+                mostrarCarritoInfo.innerHTML += 
+                `<li class="carrito-item">
+                    <img src="../images/${matriz[i][0]}.jpg" alt="Logo" class="card-imagen">
+                    <div class="carrito-titulo">
+                        <div>${matriz[i][1]}</div>
+                        <div>Precio: ${matriz[i][2]}</div>    
+                    </div>                   
+                    <div class="carrito-precio">Cant:${matriz[i][3]}</div>       
+                </li>`;
+                
+            }                
+        }
+    }
+    
