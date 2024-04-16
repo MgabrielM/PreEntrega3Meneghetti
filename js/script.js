@@ -10,67 +10,83 @@ window.onload = function() {
 };
 
 function paginaIndex(){
-    alert("Hola! \n 1- Se debe ingresar a Panel de adminstrador para cargar listado en el Panel de Usuario (Se puede crear un producto) \n 2- Ingresar al Panel de usuario y realizar la compra de los items.");
+    //alert("Hola! \n 1- Se debe ingresar a Panel de adminstrador para cargar listado en el Panel de Usuario (Se puede crear un producto) \n 2- Ingresar al Panel de usuario y realizar la compra de los items.");
+
+    validacionStorageJSON = localStorage.getItem("productos");
+
+    if(validacionStorageJSON === null || validacionStorageJSON === undefined || validacionStorageJSON === "{}"){
+        console.log("Esta vacio");
+
+        let productos = {
+            perfumes: {
+                maracuya: {
+                    id: 0,
+                    nombre: "Kit Maracuya",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 13500,            
+                },
+                castanha: {
+                    id: 1,
+                    nombre: "Kit Castanha",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 11000,            
+                },
+                faces: {
+                    id: 2,
+                    nombre: "Delin. Faces",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 7500,            
+                },
+                facesDos: {
+                    id: 3,
+                    nombre: "Labial Faces",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 4500,            
+                },
+                tododia: {
+                    id: 4,
+                    nombre: "Kit Tododía",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 4800,            
+                },
+                erio: {
+                    id: 5,
+                    nombre: "Perfume Erio",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 4800,            
+                },
+                arto: {
+                    id: 6,
+                    nombre: "Perfume Arto",
+                    descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
+                    stock: 100,
+                    precio: 4800,            
+                }
+            }
+        }
+        let productosJSON = JSON.stringify(productos);
+                localStorage.setItem("productos",productosJSON);
+                console.log(productosJSON);
+
+
+
+
+
+        console.log("Se lleno de informacion.");
+
+    }else{
+        console.log("Ya tenia informacion");
+    }
+
 }
 
 function paginaAdministrador(){
-    let productos = {
-        perfumes: {
-            maracuya: {
-                id: 0,
-                nombre: "Kit Maracuya",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 13500,            
-            },
-            castanha: {
-                id: 1,
-                nombre: "Kit Castanha",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 11000,            
-            },
-            faces: {
-                id: 2,
-                nombre: "Delin. Faces",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 7500,            
-            },
-            facesDos: {
-                id: 3,
-                nombre: "Labial Faces",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 4500,            
-            },
-            tododia: {
-                id: 4,
-                nombre: "Kit Tododía",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 4800,            
-            },
-            erio: {
-                id: 5,
-                nombre: "Perfume Erio",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 4800,            
-            },
-            arto: {
-                id: 6,
-                nombre: "Perfume Arto",
-                descripcion: "Perfume con aroma sad as dasd  e tewcsfsedsd sdf sd ",
-                stock: 100,
-                precio: 4800,            
-            }
-        }
-    }
-    let productosJSON = JSON.stringify(productos);
-            localStorage.setItem("productos",productosJSON);
-            console.log(productosJSON);
-    
     
     mostarProductos();
     
@@ -80,7 +96,7 @@ function paginaAdministrador(){
     
         productosStorageJSON = localStorage.getItem("productos");
         productosStorage = JSON.parse(productosStorageJSON);
-        console.log(productosStorage);
+
         productos = productosStorage;
     
         for(let perfume in productos.perfumes){
@@ -230,7 +246,6 @@ function paginaNegocio(){
     botonMas.forEach(function(botonMas){
         botonMas.addEventListener("click", function(){
             let botonMasInfo = event.target.name.toString();
-            let cantidadCarrito = []; 
             let campoCantidad = document.getElementById("cantidad-"+botonMasInfo);
             let valorCantidad = parseInt(campoCantidad.value);
             valorCantidad++
@@ -313,6 +328,8 @@ function carrito (id, nombre, precio, cantidad){
         let matriz = [
             [idE, nombreProducto, precioProducto, cantidadProducto]
         ];
+        
+        // localStorage.setItem("carrito",carritoJSON);
 
         for (let i = 0; i < matriz.length; i++) {
             if (matriz[i][3] > 0){   
@@ -326,7 +343,49 @@ function carrito (id, nombre, precio, cantidad){
                     <div class="carrito-precio">Cant:${matriz[i][3]}</div>       
                 </li>`;
                 
+                // let carritoJSON = JSON.stringify(matriz[i][1]);
+                // localStorage.setItem("carrito", carritoJSON);              
+                
             }                
         }
+        // console.log(carritoJSON);
     }
+
+
+    informacionFecth();
+
+    function informacionFecth(){
+
+        let url = "https://api.github.com/users/";
+        let usuario = "MgabrielM";
+
+        fetch(url + usuario)
+        .then(response => response.json())
+        .then(data => mostrarUsuarioGit(data));
+        
+} 
+
+function mostrarUsuarioGit(info){
+    let contenedorAdmin = document.querySelector(".admin-informacion");
+    contenedorAdmin.innerHTML = `
+        <div>
+            <img src="${info.avatar_url}" alt="Logo de perfil" class="imagen-perfil">
+        </div>
+        <div class="contenido-perfil">
+            <h3>${info.name}</h3>
+            <h4>GITHUB creado el día ${info.created_at}</h4>
+            <h4>Repositorios creados: ${info.public_repos}</h4>
+            <h4>Seguidores: ${info.followers}</h4>
+            <h4>Siguiendo: ${info.following}</h4>
+            <p>Ésta información está siendo traía desde GitHub, ¡inclusive la imagen!</p>
+        </div>
+    `;
+    //console.log(info);
+}
+
+
+
+
+   
+
     

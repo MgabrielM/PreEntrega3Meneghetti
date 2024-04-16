@@ -70,7 +70,7 @@ a{
     height: 70px;
     background-color: rgb(255, 102, 2);
     display: flex;
-    justify-content:space-around;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -79,6 +79,7 @@ a{
     height: auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 30px;
 }
 
@@ -324,4 +325,22 @@ a{
 .carrito-con-materiales{
     background-color: white;
     
+}
+
+.admin-informacion{
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 25px;
+    background-color: honeydew;
+
+}
+
+.imagen-perfil{
+    width: 250px;
+    height: auto;
+    border-radius: 50px;
 }
