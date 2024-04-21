@@ -283,7 +283,17 @@ function paginaNegocio(){
             let valorCantidad = parseInt(campoCantidad.value);
             valorCantidad++
 
-            campoCantidad.value = valorCantidad;         
+            campoCantidad.value = valorCantidad;
+            
+            Toastify({
+                text: "Producto añadido al carrito.",
+                style: {
+                    background: "rgb(255, 102, 2)",
+                  },
+                duration: 3000
+                
+                }).showToast();
+
             sumatoria();
 
         })
@@ -298,10 +308,29 @@ function paginaNegocio(){
             let valorCantidad = parseInt(campoCantidad.value);
 
             if(valorCantidad === 0){
+                Toastify({
 
+                    text: "No es posible hacer dicha acción.",
+                    style: {
+                        background: "red",
+                      },
+                    duration: 3000
+                    
+                    }).showToast();
             }else{
                 valorCantidad--;
                 campoCantidad.value = valorCantidad;
+
+                Toastify({
+
+                    text: "Producto excluido del carrito.",
+                    style:{
+                        background: "rgb(255, 102, 2)",
+                    },
+                    duration: 3000
+                    
+                    }).showToast();
+
                 sumatoria();                
             }             
         })
