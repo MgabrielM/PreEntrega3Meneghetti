@@ -4,8 +4,9 @@ window.onload = function() {
         paginaAdministrador();
     } else if (tituloPagina === "Negocio") {
         paginaNegocio();
+        cargarCarrito();
     } else if (tituloPagina === "Inicio"){
-        paginaIndex();
+        paginaIndex();        
     }
 };
 
@@ -209,6 +210,38 @@ function paginaAdministrador(){
     
         return;
     }
+
+    informacionFecth();
+
+    function informacionFecth(){
+
+        let url = "https://api.github.com/users/";
+        let usuario = "MgabrielM";
+
+        fetch(url + usuario)
+        .then(response => response.json())
+        .then(data => mostrarUsuarioGit(data));
+        
+} 
+
+function mostrarUsuarioGit(info){
+    let contenedorAdmin = document.querySelector(".admin-informacion");
+    contenedorAdmin.innerHTML = `
+        <div>
+            <img src="${info.avatar_url}" alt="Logo de perfil" class="imagen-perfil">
+        </div>
+        <div class="contenido-perfil">
+            <h3>${info.name}</h3>
+            <h4>GITHUB creado el día ${info.created_at}</h4>
+            <h4>Repositorios creados: ${info.public_repos}</h4>
+            <h4>Seguidores: ${info.followers}</h4>
+            <h4>Siguiendo: ${info.following}</h4>
+            <p>Ésta información está siendo traía desde GitHub, ¡inclusive la imagen!</p>
+        </div>
+    `;
+    //console.log(info);
+}
+
 }
 
 function paginaNegocio(){
@@ -319,7 +352,7 @@ function paginaNegocio(){
 
 function carrito (id, nombre, precio, cantidad){
         let idE = parseInt(id);
-        let nombreProducto = nombre.toString();
+        let nombreProducto = nombre;
         let precioProducto = parseInt(precio);
         let cantidadProducto = parseInt(cantidad);
         let mostrarCarritoInfo = document.querySelector("#carrito-mostrar");
@@ -328,8 +361,6 @@ function carrito (id, nombre, precio, cantidad){
         let matriz = [
             [idE, nombreProducto, precioProducto, cantidadProducto]
         ];
-        
-        // localStorage.setItem("carrito",carritoJSON);
 
         for (let i = 0; i < matriz.length; i++) {
             if (matriz[i][3] > 0){   
@@ -341,51 +372,95 @@ function carrito (id, nombre, precio, cantidad){
                         <div>Precio: ${matriz[i][2]}</div>    
                     </div>                   
                     <div class="carrito-precio">Cant:${matriz[i][3]}</div>       
-                </li>`;
-                
-                // let carritoJSON = JSON.stringify(matriz[i][1]);
-                // localStorage.setItem("carrito", carritoJSON);              
-                
-            }                
+                </li>`;            
+
+            }     
+            guardarCarrito(matriz[i][0],matriz[i][1],matriz[i][2],matriz[i][3]);              
         }
-        // console.log(carritoJSON);
     }
 
 
-    informacionFecth();
+let localCarrito = {};
 
-    function informacionFecth(){
+function guardarCarrito(idItem, nombreItem, precioItem, cantidadItem){
 
-        let url = "https://api.github.com/users/";
-        let usuario = "MgabrielM";
+    let idProducto = idItem;
+    let nombreProducto = nombreItem;
+    let precioProducto = precioItem;
+    let cantidadProducto = cantidadItem;
 
-        fetch(url + usuario)
-        .then(response => response.json())
-        .then(data => mostrarUsuarioGit(data));
-        
-} 
+    itemAgregado ={
+        id: idProducto,
+        nombre: nombreProducto, 
+        precio: precioProducto,
+        cantidad: cantidadProducto
+    }
 
-function mostrarUsuarioGit(info){
-    let contenedorAdmin = document.querySelector(".admin-informacion");
-    contenedorAdmin.innerHTML = `
-        <div>
-            <img src="${info.avatar_url}" alt="Logo de perfil" class="imagen-perfil">
-        </div>
-        <div class="contenido-perfil">
-            <h3>${info.name}</h3>
-            <h4>GITHUB creado el día ${info.created_at}</h4>
-            <h4>Repositorios creados: ${info.public_repos}</h4>
-            <h4>Seguidores: ${info.followers}</h4>
-            <h4>Siguiendo: ${info.following}</h4>
-            <p>Ésta información está siendo traía desde GitHub, ¡inclusive la imagen!</p>
-        </div>
-    `;
-    //console.log(info);
+    localCarrito[idProducto] = itemAgregado;
+
+    let productosGuardadosJSON = JSON.stringify(localCarrito);
+    localStorage.setItem("carrito", productosGuardadosJSON);
 }
 
+function cargarCarrito(){
 
+    itemJSON = localStorage.getItem("carrito");
+    itemStorage = JSON.parse(itemJSON);
+    //console.log(itemStorage);
 
+    if(itemStorage === null || itemStorage === undefined || itemStorage === "{}"){
+        console.log("esta vacio");        
+    }else{
+        for(let car in itemStorage){
+            let nombreCampo = document.getElementById("cantidad-"+itemStorage[car].id);
+            //console.log(itemStorage[carrito].cantidad);
+            nombreCampo.value = itemStorage[car].cantidad;
 
-   
+            carrito(itemStorage[car].id, itemStorage[car].nombre, itemStorage[car].precio, itemStorage[car].cantidad);
+            
+        }
+    }
+    sumatoriacarrito()
+}
 
-    
+function sumatoriacarrito(){
+    const idSumatoria = document.querySelectorAll(".card-cantidad-seleccionada-cantidad");
+    let identificador, valorCantidad,sumaVariable;
+    let unidades = 0;
+    let total = 0;
+    let mostrarCarritoInfo = document.querySelector("#carrito-mostrar");
+    mostrarCarritoInfo.innerHTML = '';
+
+    idSumatoria.forEach(function(cantidad){           
+        identificador = cantidad.getAttribute("id");
+        let cortarCadena = identificador.split("-");
+        identificador = parseInt(cortarCadena[1]);
+        valorCantidad = parseInt(cantidad.value);           
+
+        for(let perfum in productos.perfumes){
+            if (productos.perfumes[perfum].id == identificador){
+                sumaVariable =(valorCantidad * productos.perfumes[perfum].precio);
+                
+                carrito(identificador,productos.perfumes[perfum].nombre,productos.perfumes[perfum].precio, parseInt(valorCantidad));               
+            }
+        }
+        unidades = parseInt(unidades + valorCantidad);
+        total = parseInt(total + sumaVariable);
+        
+    }
+    )
+    let mostrarCantidad = document.getElementById("mostrarCantidad");
+    mostrarCantidad.innerText = unidades;
+    let mostrarTotal = document.getElementById("mostrarTotal");
+    mostrarTotal.innerText = total;    
+    let mostrarCarritoCantidad = document.querySelector("#carrito-mostrar-cantidad");
+    mostrarCarritoCantidad.innerHTML = mostrarCarritoCantidad.innerHTML = "Carrito ("+unidades+")";
+    let carritoModo = document.querySelector("#carrito");
+    if (unidades > 0){
+        carritoModo.classList.remove("carrito-sin-materiales");
+        carritoModo.classList.add("carrito-con-materiales");
+    } else {
+        carritoModo.classList.remove("carrito-con-materiales");
+        carritoModo.classList.add("carrito-sin-materiales");
+    }
+}
